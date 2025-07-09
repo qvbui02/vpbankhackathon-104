@@ -1,6 +1,6 @@
 {
     "columns": {
-      "UID": {
+      "u_id": {
         "sdtype": "id"
       },
       "first_name": {
@@ -40,6 +40,6 @@
         "sdtype": "email"
       }
     },
-    "primary_key": "UID",
+    "primary_key": "u_id",
     "alternate_keys": ["cccd"]
 }  

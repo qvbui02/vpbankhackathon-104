@@ -1,0 +1,25 @@
+{
+    "columns": {
+      "a_id": {
+        "sdtype": "id"
+      },
+      "account_id": {
+        "sdtype": "text"
+      },
+      "u_id": {
+        "sdtype": "id",
+        "ref": {
+            "table": "customer",
+            "column": "u_id"
+        }
+      },
+      "account_status": {
+        "sdtype": "text"
+      },
+      "created_date": {
+        "sdtype": "datetime"
+      }
+    },
+    "primary_key": "a_id",
+    "alternate_keys": ["account_id"]
+}  
