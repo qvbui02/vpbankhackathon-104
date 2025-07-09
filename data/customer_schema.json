@@ -1,0 +1,45 @@
+{
+    "columns": {
+      "UID": {
+        "sdtype": "id"
+      },
+      "first_name": {
+        "sdtype": "text"
+      },
+      "middle_name": {
+        "sdtype": "text"
+      },
+      "last_name": {
+        "sdtype": "text"
+      },
+      "cccd": {
+        "sdtype": "text"
+      },
+      "address": {
+        "sdtype": "text"
+      },
+      "district": {
+        "sdtype": "text"
+      },
+      "city": {
+        "sdtype": "text"
+      },
+      "country": {
+        "sdtype": "text"
+      },
+      "number": {
+        "sdtype": "text"
+      },
+      "dob": {
+        "sdtype": "datetime"
+      },
+      "gender": {
+        "sdtype": "categorical"
+      },
+      "email": {
+        "sdtype": "email"
+      }
+    },
+    "primary_key": "UID",
+    "alternate_keys": ["cccd"]
+}  
