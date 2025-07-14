@@ -12,8 +12,8 @@ import json
 # with open("E:\\VpBank\\vpbankhackathon-104\\data\\customer.json", "r") as f:
 #     customer_data = json.load(f)
 # customer_df = pd.DataFrame(customer_data)
-account_df = pd.read_json("E:\\VpBank\\vpbankhackathon-104\\data\\account.json", lines=True)
-customer_df = pd.read_json("E:\\VpBank\\vpbankhackathon-104\\data\\customer.json", lines=True)
+account_df = pd.read_json("data/account.json", lines=True)
+customer_df = pd.read_json("data/customer.json", lines=True)
 
 # Cập nhật danh sách ngân hàng và tiền tệ
 # Cập nhật danh sách ngân hàng và tiền tệ
@@ -65,18 +65,14 @@ def generate_transaction():
     tx_type = random.choice(["CASH", "WIRE"])
     status = random.choices([True, False], weights=[97, 3])[0]
 
-    # Lấy tiền tệ từ bank_id
     sender_currency = random.choice(bank_currency_map[sender.bank_id])
     receiver_currency = random.choice(bank_currency_map[receiver.bank_id])
+
     common = {
-        "sender": {
-            "bank_id": sender.bank_id,
-            "account_ID": sender.account_id
-        },
-        "receiver": {
-            "bank_id": receiver.bank_id,
-            "account_ID": receiver.account_id
-        },
+        "sender_bank_id": sender.bank_id,
+        "sender_account_id": sender.account_id,
+        "receiver_bank_id": receiver.bank_id,
+        "receiver_account_id": receiver.account_id,
         "sender_currency": sender_currency,
         "receiver_currency": receiver_currency,
         "sender_amount": amount,
@@ -88,33 +84,15 @@ def generate_transaction():
         "transaction_type": tx_type
     }
 
-    # Nếu là VPB to VPB thì tạo 2 bản, 1 bản DEBIT và 1 bản CREDIT
     if case == "VPB_TO_VPB":
-        debit_tx = {
-            **common,
-            "transaction_id": str(uuid.uuid4()),
-            "direction": "DEBIT"
-        }
-        credit_tx = {
-            **common,
-            "transaction_id": str(uuid.uuid4()),
-            "direction": "CREDIT"
-        }
+        debit_tx = {**common, "transaction_id": str(uuid.uuid4()), "direction": "DEBIT"}
+        credit_tx = {**common, "transaction_id": str(uuid.uuid4()), "direction": "CREDIT"}
         return [debit_tx, credit_tx]
     elif case == "VPB_TO_OTHER":
-
-        debit_tx = {
-            **common,
-            "transaction_id": str(uuid.uuid4()),
-            "direction": "DEBIT"
-        }
+        debit_tx = {**common, "transaction_id": str(uuid.uuid4()), "direction": "DEBIT"}
         return [debit_tx]
-    else :
-        credit_tx = {
-            **common,
-            "transaction_id": str(uuid.uuid4()),
-            "direction": "CREDIT"
-        }
+    else:
+        credit_tx = {**common, "transaction_id": str(uuid.uuid4()), "direction": "CREDIT"}
         return [credit_tx]
 # Sinh ra nhiều giao dịch
 transactions = []
@@ -124,7 +102,8 @@ for _ in range(82000):  # 500 giao dịch = 1000 dòng
 df = pd.DataFrame(transactions)
 
 # Xuất ra file nếu muốn
-df.to_json("transactions.json", orient="records", indent=2)
+#df.to_json("transactions1.json", orient="records", indent=2)
+df.to_json("transactions1.json", orient="records", lines=True, force_ascii=False)
 # df.to_csv("transactions.csv", index=False)
 
 # Xem trước
